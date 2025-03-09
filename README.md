@@ -1,7 +1,9 @@
 # Documentação Técnica - Backend Itaú
 
 ## Visão Geral
-Este é um projeto backend desenvolvido em Java com Spring Boot que implementa uma API REST para gerenciamento de transações financeiras. O sistema permite criar transações, obter estatísticas e realizar verificações de saúde da aplicação.
+Este é um projeto backend desenvolvido em Java com Spring Boot que implementa uma API REST para gerenciamento de transações financeiras. O sistema permite criar transações, obter estatísticas e realizar verificações de saúde da aplicação. 
+
+Link do desafio: https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior/tree/main?tab=readme-ov-file
 
 ## Requisitos Técnicos
 - Java 17
