@@ -51,7 +51,7 @@ public class TransactionService {
         double sum = 0;
         double avg = 0;
         double max = 0;
-        double min = 0;
+        Double min = null;
 
         for(Transaction t : transactions){
             count++;
@@ -59,13 +59,18 @@ public class TransactionService {
             if(t.getValue() > max){
                 max = t.getValue();
             }
-            if(t.getValue() < min){
+            if(min == null || t.getValue() < min ){
                 min = t.getValue();
             }
         }
         if(count > 0){
             avg = sum / count;
         }
+
+        if(min == null){
+            min = 0.0;
+        }
+
         return new StatsDTO(count, sum, avg, min, max);
     }
 }

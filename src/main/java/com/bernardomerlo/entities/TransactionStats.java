@@ -30,7 +30,6 @@ public class TransactionStats {
         LocalDateTime last60Seconds = LocalDateTime.now().minusSeconds(60);
         ArrayList<Transaction> result = new ArrayList<>();
         for (Transaction t : transactions) {
-            System.out.println(t.toString());
             if(t.getWhenAdded().isAfter(last60Seconds)){
                 result.add(t);
             }
