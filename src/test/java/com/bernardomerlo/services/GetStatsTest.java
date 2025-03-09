@@ -27,9 +27,9 @@ class GetStatsTest {
 
     @Test
     public void testGetStatsWithEmptyList() {
-        when(transactionStats.getLastTransactions()).thenReturn(new ArrayList<>());
+        when(transactionStats.getLastTransactions(60)).thenReturn(new ArrayList<>());
 
-        StatsDTO statsDTO = transactionService.getStats();
+        StatsDTO statsDTO = transactionService.getStats(60);
 
         assertEquals(0, statsDTO.getCount());
         assertEquals(0.0, statsDTO.getSum());
@@ -45,9 +45,9 @@ class GetStatsTest {
         ArrayList<Transaction> arrayWithOneTransaction = new ArrayList<Transaction>();
         arrayWithOneTransaction.add(transaction);
 
-        when(transactionStats.getLastTransactions()).thenReturn(arrayWithOneTransaction);
+        when(transactionStats.getLastTransactions(60)).thenReturn(arrayWithOneTransaction);
 
-        StatsDTO statsDTO = transactionService.getStats();
+        StatsDTO statsDTO = transactionService.getStats(60);
 
         assertEquals(1, statsDTO.getCount());
         assertEquals(100.0, statsDTO.getSum());
@@ -67,9 +67,9 @@ class GetStatsTest {
 
         ArrayList<Transaction> arrayWithMultipleTransactions = new ArrayList<>(Arrays.asList(transaction, transaction1, transaction2, transaction3, transaction4, transaction5));
 
-        when(transactionStats.getLastTransactions()).thenReturn(arrayWithMultipleTransactions);
+        when(transactionStats.getLastTransactions(60)).thenReturn(arrayWithMultipleTransactions);
 
-        StatsDTO statsDTO = transactionService.getStats();
+        StatsDTO statsDTO = transactionService.getStats(60);
 
         assertEquals(6, statsDTO.getCount());
         assertEquals(21.0, statsDTO.getSum());

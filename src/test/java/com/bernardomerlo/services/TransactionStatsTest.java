@@ -38,7 +38,7 @@ public class TransactionStatsTest {
         transactionStats.add(validTransaction);
         transactionStats.add(invalidTransaction);
 
-        ArrayList<Transaction> lastTransactions = transactionStats.getLastTransactions();
+        ArrayList<Transaction> lastTransactions = transactionStats.getLastTransactions(60);
 
         assertEquals(1, lastTransactions.size(), "Deve haver apenas 1 transação recente");
         assertTrue(lastTransactions.contains(validTransaction), "Deve conter a transação recente");
@@ -51,15 +51,15 @@ public class TransactionStatsTest {
         Transaction validTransaction = new Transaction(100.0, OffsetDateTime.now().minusDays(1));
         transactionStats.add(validTransaction);
 
-        assertFalse(transactionStats.getLastTransactions().isEmpty(), "Deve haver uma transação");
+        assertFalse(transactionStats.getLastTransactions(60).isEmpty(), "Deve haver uma transação");
 
         transactionStats.delete();
 
-        assertTrue(transactionStats.getLastTransactions().isEmpty(), "Não deve haver nenhuma transação");
+        assertTrue(transactionStats.getLastTransactions(60).isEmpty(), "Não deve haver nenhuma transação");
 
         transactionStats.delete();
 
-        assertTrue(transactionStats.getLastTransactions().isEmpty(), "Não deve haver erro ao deletar com a lista vazia");
+        assertTrue(transactionStats.getLastTransactions(60).isEmpty(), "Não deve haver erro ao deletar com a lista vazia");
     }
 
 }
