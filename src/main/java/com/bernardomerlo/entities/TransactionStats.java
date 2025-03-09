@@ -26,8 +26,8 @@ public class TransactionStats {
         transactions.clear();
     }
 
-    public ArrayList<Transaction> getLastTransactions() {
-        LocalDateTime last60Seconds = LocalDateTime.now().minusSeconds(60);
+    public ArrayList<Transaction> getLastTransactions(Integer seconds) {
+        LocalDateTime last60Seconds = LocalDateTime.now().minusSeconds(seconds);
         ArrayList<Transaction> result = new ArrayList<>();
         for (Transaction t : transactions) {
             if(t.getWhenAdded().isAfter(last60Seconds)){

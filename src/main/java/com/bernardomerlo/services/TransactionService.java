@@ -53,10 +53,10 @@ public class TransactionService {
         transactions.delete();
     }
 
-    public StatsDTO getStats(){
+    public StatsDTO getStats(Integer seconds){
         long startTime = System.nanoTime();
         logger.debug("Iniciando cálculo de estatística");
-        ArrayList<Transaction> transactions =  this.transactions.getLastTransactions();
+        ArrayList<Transaction> transactions =  this.transactions.getLastTransactions(seconds);
 
         int count = 0;
         double sum = 0;
