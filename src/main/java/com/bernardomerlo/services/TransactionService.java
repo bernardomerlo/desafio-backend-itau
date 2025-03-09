@@ -6,16 +6,20 @@ import com.bernardomerlo.entities.TransactionStats;
 import com.bernardomerlo.exceptions.InvalidTimeException;
 import com.bernardomerlo.exceptions.InvalidValueException;
 import com.bernardomerlo.exceptions.NullValuesException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
+
 @Service
 public class TransactionService {
 
-    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
+
     private final TransactionStats transactions;
 
     public TransactionService(TransactionStats transactions) {
@@ -23,17 +27,22 @@ public class TransactionService {
     }
 
     public void validateTransaction(Transaction transaction) {
+        logger.debug("Iniciando validação de transação");
         OffsetDateTime date = transaction.getDate();
         Double value = transaction.getValue();
         if (date == null || value == null) {
+            logger.debug("Falha na validação: valores nulos detectados em {}", transaction);
             throw new NullValuesException("Valores tem que ser diferentes de null");
         }
         if (date.isAfter(OffsetDateTime.now())) {
+            logger.debug("Falha na validação: data futura detectada: {}", date);
             throw new InvalidTimeException("Transacao nao pode ser no futuro");
         }
         if (value < 0) {
+            logger.debug("Falha na validação: valor negativo detectado: {}", value);
             throw new InvalidValueException("Valores nao pode ser negativo");
         }
+        logger.debug("Transação validada com sucesso: {}", transaction);
     }
 
     public void addTransaction(Transaction transaction) {
@@ -45,6 +54,8 @@ public class TransactionService {
     }
 
     public StatsDTO getStats(){
+        long startTime = System.nanoTime();
+        logger.debug("Iniciando cálculo de estatística");
         ArrayList<Transaction> transactions =  this.transactions.getLastTransactions();
 
         int count = 0;
@@ -71,6 +82,9 @@ public class TransactionService {
             min = 0.0;
         }
 
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        logger.debug("Terminando cálculo de estatística: {}", duration);
         return new StatsDTO(count, sum, avg, min, max);
     }
 }
